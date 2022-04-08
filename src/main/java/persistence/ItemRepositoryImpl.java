@@ -12,11 +12,13 @@ import org.springframework.stereotype.Repository;
 import domain.item.Item;
 import domain.item.ItemData;
 import domain.item.ItemRepository;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 @Repository
 public class ItemRepositoryImpl implements ItemRepository {
 
-    private Map<String, ItemData> items = new HashMap<>();
+    private Map<String, ItemData> items;
 
     @Override
     public Item create(ItemData data) {
