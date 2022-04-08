@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CartItemRepositoryImpl implements CartItemRepository {
 
-    Map<Cart, List<Item>> cartToItems = new HashMap<>();
+    private final Map<Cart, List<Item>> cartToItems = new HashMap<>();
 
     @Override
     public void addCart(Cart cart) {

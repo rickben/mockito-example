@@ -16,7 +16,7 @@ import domain.item.ItemRepository;
 @Repository
 public class ItemRepositoryImpl implements ItemRepository {
 
-    Map<String, ItemData> items = new HashMap<>();
+    private Map<String, ItemData> items = new HashMap<>();
 
     @Override
     public Item create(ItemData data) {
