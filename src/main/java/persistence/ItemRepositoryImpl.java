@@ -35,13 +35,16 @@ public class ItemRepositoryImpl implements ItemRepository {
     @Override
     public Item get(String id) {
         if (!items.containsKey(id)) {
-            throw new NoSuchElementException(MessageFormat.format("Item with id: {} doesn't exist.", id));
+            throw new NoSuchElementException(MessageFormat.format("Item with id: {0} does not exist.", id));
         }
         return Item.of(id, items.get(id));
     }
 
     @Override
     public void update(String id, ItemData data) {
+        if (!items.containsKey(id)) {
+            throw new NoSuchElementException(MessageFormat.format("Item with id: {} doesn't exist.", id));
+        }
         items.put(id, data);
     }
 

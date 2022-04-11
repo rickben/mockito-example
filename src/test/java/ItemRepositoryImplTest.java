@@ -1,6 +1,8 @@
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.junit.jupiter.api.BeforeAll;
+import java.util.NoSuchElementException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -24,18 +26,28 @@ public class ItemRepositoryImplTest extends FullContextApplicationTest {
     }
 
     @Test
-    void create_shouldPutItemToMemory() {
+    void createAndGetItem_shouldPutItemToMemoryAndGetIt() {
         ItemData itemData = ItemData.builder()
                 .name("item")
                 .description("description")
                 .price("90")
                 .build();
 
-        Item result = underTest.create(itemData);
+        Item createResult = underTest.create(itemData);
+        Item getResult = underTest.get(createResult.getId());
 
-        assertThat(result.getData())
+        assertThat(createResult.getData())
                 .isEqualTo(itemData);
         assertThat(itemsMemory).containsValue(itemData);
+        assertThat(getResult.getData())
+                .isEqualTo(itemData);
+    }
+
+    @Test
+    void getItem_itemDoesNotExist_shouldThrowException() {
+        assertThatThrownBy(() -> underTest.get("non-existing-item"))
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessageContaining("not exist.");
     }
 
 }
