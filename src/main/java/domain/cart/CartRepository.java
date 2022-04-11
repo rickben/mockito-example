@@ -5,4 +5,6 @@ public interface CartRepository {
     Cart create(CartData data);
 
     void delete(String id);
+
+    Cart get(String id);
 }

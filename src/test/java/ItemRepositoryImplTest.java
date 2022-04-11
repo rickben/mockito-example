@@ -3,7 +3,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
+import domain.CartItemRepository;
 import domain.item.Item;
 import domain.item.ItemData;
 import domain.item.ItemRepository;
@@ -13,9 +15,12 @@ public class ItemRepositoryImplTest extends FullContextApplicationTest {
 
     ItemRepository underTest;
 
+    @Mock
+    CartItemRepository cartItemRepository;
+
     @BeforeEach
     void init() {
-        underTest = new ItemRepositoryImpl(itemsMemory);
+        underTest = new ItemRepositoryImpl(itemsMemory, cartItemRepository);
     }
 
     @Test

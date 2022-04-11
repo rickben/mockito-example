@@ -7,17 +7,21 @@ import domain.item.Item;
 
 public interface CartItemRepository {
 
-    void addCart(Cart cart);
+    void addCart(String cartId);
 
-    void addItemToCart(Cart cart, Item item);
+    void removeCart(String cartId);
 
-    void removeItemFromCart(Cart cart, Item item);
+    void removeItemFromAllCarts(String itemId);
 
-    void removeAllCartItems(Cart cart);
+    void addItemToCart(String cartId, String itemId);
 
-    List<Item> getAllCartItems(Cart cart);
+    void removeItemFromCart(String cartId, String itemId);
 
-    boolean isItemInCart(Cart cart, Item item);
+    void removeAllCartItems(String cartId);
 
-    int getCartItemsNumber(Cart cart);
+    List<String> getAllCartItems(String cartId);
+
+    boolean isItemInCart(String cartId, String itemId);
+
+    int getCartItemsNumber(String cartId);
 }

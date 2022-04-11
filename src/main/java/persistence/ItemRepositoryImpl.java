@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Repository;
 
+import domain.CartItemRepository;
 import domain.item.Item;
 import domain.item.ItemData;
 import domain.item.ItemRepository;
@@ -18,7 +19,9 @@ import lombok.AllArgsConstructor;
 @Repository
 public class ItemRepositoryImpl implements ItemRepository {
 
-    private Map<String, ItemData> items;
+    private final Map<String, ItemData> items;
+
+    private final CartItemRepository cartItemRepository;
 
     @Override
     public Item create(ItemData data) {
@@ -43,5 +46,6 @@ public class ItemRepositoryImpl implements ItemRepository {
     @Override
     public void delete(String id) {
         items.remove(id);
+        cartItemRepository.removeItemFromAllCarts(id);
     }
 }

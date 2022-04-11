@@ -1,65 +1,78 @@
 package persistence;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
 import domain.CartItemRepository;
-import domain.cart.Cart;
-import domain.item.Item;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Repository
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class CartItemRepositoryImpl implements CartItemRepository {
 
-    private final Map<Cart, List<Item>> cartToItems = new HashMap<>();
+    private final Map<String, List<String>> cartIdToItemsIds;
 
     @Override
-    public void addCart(Cart cart) {
-        cartToItems.put(cart, new ArrayList<>());
+    public void addCart(String cartId) {
+        cartIdToItemsIds.put(cartId, new ArrayList<>());
     }
 
     @Override
-    public void addItemToCart(Cart cart, Item item) {
-        if (!cartToItems.containsKey(cart)) {
-            throw new IllegalStateException("Can not add items to non existing cart");
+    public void removeCart(String cartId) {
+        cartIdToItemsIds.remove(cartId);
+    }
+
+    @Override
+    public void removeItemFromAllCarts(String itemId) {
+        cartIdToItemsIds.forEach(
+                (cartId, listItemIds) ->
+                        listItemIds.remove(itemId)
+        );
+    }
+
+    @Override
+    public void addItemToCart(String cartId, String itemId) {
+        if (!cartIdToItemsIds.containsKey(cartId)) {
+            throw new IllegalStateException("Can not add items to non existing cart with id: " + cartId);
         }
-        List<Item> items = cartToItems.get(cart);
-        items.add(item);
+        List<String> itemsIds = cartIdToItemsIds.get(cartId);
+        itemsIds.add(itemId);
     }
 
     @Override
-    public void removeItemFromCart(Cart cart, Item item) {
-        if (!cartToItems.containsKey(cart)) {
+    public void removeItemFromCart(String cartId, String itemId) {
+        if (!cartIdToItemsIds.containsKey(cartId)) {
             return;
         }
-        List<Item> items = cartToItems.get(cart);
-        items.remove(item);
+        List<String> itemsIds = cartIdToItemsIds.get(cartId);
+        itemsIds.remove(itemId);
     }
 
     @Override
-    public void removeAllCartItems(Cart cart) {
-        cartToItems.put(cart, new ArrayList<>());
+    public void removeAllCartItems(String cartId) {
+        if (cartIdToItemsIds.containsKey(cartId)) {
+            cartIdToItemsIds.put(cartId, new ArrayList<>());
+        }
     }
 
     @Override
-    public List<Item> getAllCartItems(Cart cart) {
-        if (!cartToItems.containsKey(cart)) {
+    public List<String> getAllCartItems(String cartId) {
+        if (!cartIdToItemsIds.containsKey(cartId)) {
             return new ArrayList<>();
         }
-        return cartToItems.get(cart);    }
-
-    @Override
-    public boolean isItemInCart(Cart cart, Item item) {
-        return getAllCartItems(cart).contains(item);
+        return cartIdToItemsIds.get(cartId);
     }
 
     @Override
-    public int getCartItemsNumber(Cart cart) {
-        return getAllCartItems(cart).size();
+    public boolean isItemInCart(String cartId, String itemId) {
+        return getAllCartItems(cartId).contains(itemId);
+    }
+
+    @Override
+    public int getCartItemsNumber(String cartId) {
+        return getAllCartItems(cartId).size();
     }
 }
