@@ -37,4 +37,5 @@ public class ItemRepositoryImplTest extends FullContextApplicationTest {
                 .isEqualTo(itemData);
         assertThat(itemsMemory).containsValue(itemData);
     }
+
 }

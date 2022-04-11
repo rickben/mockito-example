@@ -3,7 +3,9 @@ package persistence;
 import static utils.Utils.createIdentifier;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -47,5 +49,10 @@ public class ItemRepositoryImpl implements ItemRepository {
     public void delete(String id) {
         items.remove(id);
         cartItemRepository.removeItemFromAllCarts(id);
+    }
+
+    @Override
+    public List<String> getAll() {
+        return new ArrayList<>(items.keySet());
     }
 }
