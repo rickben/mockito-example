@@ -3,9 +3,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 public class ShopperCartSimpleMockTest {
 
@@ -23,6 +21,7 @@ public class ShopperCartSimpleMockTest {
     void getShoppingContent_shouldReturn() {
         String shoppingContent = "All shopping content";
         when(mockedCart.getShoppingContent()).thenReturn(shoppingContent);
-        assertThat(underTest.getShoppingContent()).isEqualTo(shoppingContent);
+
+        assertThat(underTest.getCartShoppingContent()).isEqualTo(shoppingContent);
     }
 }

@@ -27,7 +27,7 @@ public class AnswerTest {
     void thenReturn_getShoppingContent() {
         when(mockedCart.getShoppingContent()).thenReturn(shoppingContent);
 
-        assertThat(mockedCart.getShoppingContent()).isEqualTo(shoppingContent);
+        assertThat(underTest.getCartShoppingContent()).isEqualTo(shoppingContent);
     }
 
     @Test
@@ -37,7 +37,17 @@ public class AnswerTest {
             return null;
         }).when(mockedCart).printShoppingContent();
 
-        mockedCart.printShoppingContent();
+        underTest.printCartShoppingContent();
+    }
+
+    @Test
+    void doAnswer_inlineAnswer_returnValue_getShoppingContent() {
+        doAnswer(invocation -> {
+            System.out.println(shoppingContent);
+            return "content";
+        }).when(mockedCart).getShoppingContent();
+
+        assertThat(underTest.getCartShoppingContent()).isEqualTo("content");
     }
 
     @Test
@@ -50,7 +60,7 @@ public class AnswerTest {
             }
         }).when(mockedCart).printShoppingContent();
 
-        mockedCart.printShoppingContent();
+        underTest.printCartShoppingContent();
     }
 
     @Test
@@ -60,14 +70,14 @@ public class AnswerTest {
             return shoppingContent;
         }));
 
-        assertThat(mockedCart.getShoppingContent()).isEqualTo(shoppingContent);
+        assertThat(underTest.getCartShoppingContent()).isEqualTo(shoppingContent);
     }
 
     @Test
     void doThrow_printShoppingContent() {
         doThrow(IllegalStateException.class).when(mockedCart).getNonExistingContent();
 
-        assertThatThrownBy(() -> mockedCart.getNonExistingContent())
+        assertThatThrownBy(() -> underTest.getNonExistingCartContent())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("Non-existing content.");
     }
