@@ -1,14 +1,14 @@
-public abstract class Cart {
+public interface Cart {
 
-    public abstract String getShoppingContent();
+    String getShoppingContent();
 
-    public abstract void getNonExistingContent();
+    void getNonExistingContent();
 
-    public abstract void printShoppingContent();
+    void printShoppingContent();
 
-    public abstract String getShoppingContentByYear(Integer year);
+    String getShoppingContentByYear(Integer year);
 
-    public abstract String getShoppingContentWithNewValue(Integer value);
+    String getShoppingContentWithNewValue(Integer value);
 
-    public abstract String getShoppingContent(Integer year, String month);
+    String getShoppingContent(Integer year, String month);
 }

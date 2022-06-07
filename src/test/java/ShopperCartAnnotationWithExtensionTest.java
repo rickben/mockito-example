@@ -1,4 +1,5 @@
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,5 +23,6 @@ public class ShopperCartAnnotationWithExtensionTest {
         when(mockedCart.getShoppingContent()).thenReturn(shoppingContent);
 
         assertThat(underTest.getCartShoppingContent()).isEqualTo(shoppingContent);
+        verify(mockedCart).getShoppingContent();
     }
 }

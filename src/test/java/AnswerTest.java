@@ -74,11 +74,12 @@ public class AnswerTest {
     }
 
     @Test
-    void doThrow_printShoppingContent() {
-        doThrow(IllegalStateException.class).when(mockedCart).getNonExistingContent();
+    void thenAnswer_answerObject_withParams_getShoppingContent() {
+        when(mockedCart.getShoppingContentByYear(2000)).thenAnswer((invocation -> {
+            int year = invocation.getArgument(0, Integer.class);
+            return "content of year: " + year;
+        }));
 
-        assertThatThrownBy(() -> underTest.getNonExistingCartContent())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Non-existing content.");
+        assertThat(underTest.getCartShoppingContentByYear(2000)).isEqualTo("content of year: 2000");
     }
 }

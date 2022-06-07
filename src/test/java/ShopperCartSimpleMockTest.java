@@ -2,6 +2,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -23,5 +24,22 @@ public class ShopperCartSimpleMockTest {
         when(mockedCart.getShoppingContent()).thenReturn(shoppingContent);
 
         assertThat(underTest.getCartShoppingContent()).isEqualTo(shoppingContent);
+    }
+
+    @Disabled
+    @Test
+    void getShoppingContent_shouldFailStubbing() {
+        String shoppingContent = "All shopping content";
+        when(mockedCart.getShoppingContent()).thenReturn(shoppingContent);
+    }
+
+    @Disabled
+    @Test
+    void getShoppingContent_shouldFailThenReturn() {
+        String shoppingContent = "All shopping content";
+        when(mockedCart.getShoppingContent());
+
+        assertThat(underTest.getCartShoppingContent()).isEqualTo(shoppingContent);
+
     }
 }
